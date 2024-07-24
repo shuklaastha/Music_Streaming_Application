@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Confirmation</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='summary.css') }}">
+
+    <style>
+        .btn-field1{
+            margin-left: 14.5cm;
+            margin-top: 10px;
+            width: 20%;
+            display: flex;
+            justify-content: space-around;
+        }
+        .btn-field1 button{
+            flex-basis: 48%;
+            background: #554dc5;
+            color: #fff;
+            height: 40px;
+            border: 0;
+            outline: 0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: .9;
+        }
+        .btn-field1 button:hover {
+            background-color: #7691c4;
+        }
+
+
+    </style>
+<head>
+    <title>Order Confirmation</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='summary.css') }}">
+    <style>
+    </style>
+</head>
+<body>
+
+    <h1>Order Confirmation</h1>
+
+
+
+    <p>Thank you! Your order is confirmed.</p>
+    <p>Your package is on its way!</p>
+    <p>Your order will be delivered within the next 1 Hour.</p>
+
+
+    <div class="btn-field">
+        <button onclick="window.location.href='user_dashboard';"
+        button type="button">Home</button>
+        
+    </div>
+
+    <div class="btn-field1">
+        <button onclick="window.location.href='orders';"
+        button type="button">Previous Orders</button>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Previous Orders</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('user_dashboard') }}" class="checkout-button">dashboard</a>
+    <h1>Previous Orders</h1>
+    <ul>
+        {% for order in orders %}
+            <li>
+                Order ID: {{ order.id }}
+                <a href="{{ url_for('order_details', order_id=order.id) }}">View Order Details</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

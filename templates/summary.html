@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Grocery App Manager Summary</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='summary.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class ="header">
+        <h1>Summary</h1>
+
+        <div class="btn-field">
+            <button onclick="window.location.href='manager_dashboard';"
+            button type="button">Dashboard</button>
+            
+        </div>
+
+        <div class="logout-button">
+            
+            <button onclick="window.location.href='/';" type="submit"><i class="fa fa-sign-out"></i> Logout</button>
+        </div>
+    </div>
+
+    <div class="info-cards-container">
+        <div class="info-card">
+            <h2>Total Sales</h2>
+            <p>₹{{ total_sales }}</p>
+        </div>
+        <div class="info-card">
+            <h2>Total Users</h2>
+            <p>{{ total_user }}</p>
+        </div>
+
+        <div class="info-card">
+            <h2>Total Product</h2>
+            <p>{{ total_products }}</p>
+        </div>
+
+        <div class="info-card">
+            <h2>Most Sold Product</h2>
+            <p>{{ user_data.most_purchased_item_name }}</p>
+        </div>
+
+        <h2>Products with Quantity</h2>
+        
+
+    </div>
+
+    
+
+    <div class="user-chart">
+        <img src="{{ chart_image_path }}" alt="Bar Chart1">
+    </div>
+
+
+</body>
+</html>

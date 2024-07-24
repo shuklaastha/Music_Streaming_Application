@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #075b15;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #6d1189;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #1e6718;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: #347ac4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Order Details</h1>
+    <div class="container">
+        <p>Order ID: {{ order.id }}</p>
+        <p>Overall Total: ₹{{ order.overall_total }}</p>
+        
+        <h2>Order Items</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order_item in order_items %}
+                    <tr>
+                        <td>{{ order_item.product.product_name }}</td>
+                        <td>{{ order_item.quantity }}</td>
+                        <td>₹{{ order_item.total_price }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <a href="{{ url_for('user_dashboard') }}" class="checkout-button">Dashboard</a>
+    </div>
+</body>
+</html>

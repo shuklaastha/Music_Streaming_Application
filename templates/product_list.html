@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>manager_dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/manager_nav.css">
+
+    <title>Product List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function confirmDelete(productName, productId) {
+            if (confirm(`Are you sure you want to delete ${productName}?`)) {
+                document.getElementById(`delete-form-${productId}`).submit();
+            }
+        }
+    </script>
+
+    <style>
+        .table {
+            border-collapse: collapse;
+            width: 60%;
+            margin-top: 20px;
+        }
+
+        .table th, .table td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table thead {
+            background-color: brown;
+            color: aliceblue;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table tbody tr:hover {
+            background-color: #ddd;
+        }
+
+
+        .btn-field{
+                margin-top: 10px;
+                width: 30%;
+                display: flex;
+                justify-content: space-around;
+            }
+            .btn-field button{
+                flex-basis: 48%;
+                background: #194197;
+                color: #fff;
+                height: 40px;
+                border: 0;
+                outline: 0;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: .9;
+            }
+            .btn-field button:hover{
+                opacity: .9;
+            }
+
+            .logout-button {
+            margin-left: 7cm; 
+            }
+
+            .logout-button button{
+                padding: 8px 16px;
+                font-size: 16px;
+                background: #700c82;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            .logout-button button:hover {
+                background-color: #5792d2;
+            }
+    </style>
+
+</head>
+
+<body>
+
+
+    <div class ="header">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='image/my.png') }}" alt="Image">
+        </div>
+
+        <div class="search">
+            <form>
+                <input type="text" placeholder="Search">
+            </form>
+        </div>
+
+
+        <div class="logout-button">
+            
+            <button onclick="window.location.href='/';" type="submit"><i class="fa fa-sign-out"></i> Logout</button>
+        </div>
+
+
+        <script>
+            document.getElementsByClassName("fa")[3].addEventListener("click",function(){
+                document.getElementsByClassName("links")[0].classList.toggle("showmylinks");});
+    
+        </script>
+    </div>
+    
+    <div class = "container1">
+
+        <div class="btn-field">
+            <button onclick="window.location.href='new_product';"
+            button type="button">Add New Product</button>
+            <button onclick="window.location.href='manager_dashboard';"
+            button type="button">Dashboard</button>
+            
+        </div>
+
+        <div>
+            <table class = "table">
+                <thead style="background-color: brown;color: aliceblue;">
+                    <th>ID</th>
+                    <th>Product_name</th>
+                    <th>Quantity</th>
+                    <th>Category_id</th>
+                    <th>Unit_id</th>
+                    <th>Price_per_unit</th>
+                    <th>  Action  </th>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{product.product_name}}</td>
+                        <td>{{product.quantity}}</td>
+                        <td>{{product.category}}</td>
+                        <td>{{product.unit}}</td>
+                        <td>{{product.price_per_unit}}</td>
+                        <td>
+                            <span style="font-size: 24px;color: green;">
+                            <a href="{{ url_for('edit_product', product_id=product.product_id) }}"><i class="fa fa-pencil"></i></a></span>
+                                |
+                                <button onclick="confirmDelete('{{ product.product_name }}', '{{ product.product_id }}')">Delete</button>
+                                <form id="delete-form-{{ product.product_id }}" method="post" action="{{ url_for('delete_product', product_id=product.product_id) }}" style="display: none;">
+                                    <input type="submit" value="Delete">
+                                </form>
+                                    
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="btn-field">
+            <button onclick="window.location.href='new_product';"
+            button type="button">Add New Product</button>
+            <button onclick="window.location.href='manager_dashboard';"
+            button type="button">Dashboard</button>
+            
+        </div>
+
+    </div>
+
+
+     <!------------------------------------footer------------------------>
+
+    <footer class="footer">
+
+        <div class="footer-left">
+            <img src="{{ url_for('static', filename='image/my.png') }}" alt="Image">
+            <div class="socials">
+
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-youtube"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+            </div>
+        </div>
+        <ul class="footer-right">
+            <li>
+                <h2>Fresh_Mart</h2>
+
+                <ul class="box">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Carrers At Fresh_Mart</a></li>
+                    <li><a href="#">Terms and Conditions</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </li>
+
+            <li class="features">
+                <h2>Useful links</h2>
+
+                <ul class="box">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Sales</a></li>
+                    <li><a href="#">Tickets</a></li>
+                    <li><a href="#">Certifications</a></li>
+                </ul>
+            </li>
+
+
+            <li>
+                <h2>Address</h2>
+
+                <ul class="box">
+                    <li><a href="#">2nd Floor, Patil Plaza</a></li>
+                    <li><a href="#">Vanari Rd, Parvati Paytha</a></li>
+                    <li><a href="#">Pune,</a></li>
+                    <li><a href="#">Maharastra, India</a></li>
+                </ul>
+            </li>
+
+        </ul>
+
+        <div class="footer-bottom">
+            <p>All Right reserved by &copy;conceptial 2023 </p>
+
+        </div>
+
+    </footer>
+
+</body>
+</html>
+
+
+</body>
+</html>

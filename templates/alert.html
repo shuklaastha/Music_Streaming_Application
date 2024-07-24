@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>manager_dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/manager_nav.css">
+
+</head>
+
+<body>
+    <form action="{{ url_for('manager_dashboard') }}" method="POST"></form>
+
+    <div class ="header">
+        <div class="logo">
+            <a href="home.html"><img src="{{ url_for('static', filename='image/my.png') }}"></a>
+        </div>
+
+        <div class="search">
+            <form>
+                <input type="text" placeholder="Search">
+            </form>
+        </div>
+
+
+        <div class="icons">
+            <a href="#" class="fa fa-user"></a>
+            <a href="#" class="fa fa-bars"></a>
+        </div>
+
+
+        <script>
+            document.getElementsByClassName("fa")[3].addEventListener("click",function(){
+                document.getElementsByClassName("links")[0].classList.toggle("showmylinks");});
+    
+        </script>
+    </div>
+
+
+    <div class = "container1">
+    <from action="" method="post">
+        Click YES to confirm
+        <input type="submit" value="YES" class="btn btn-danger">
+        click Cancel to back
+        <input type="submit" value="Cancel">
+    
+    </from>
+
+    </div>
+
+
+     <!------------------------------------footer----------------------------------->
+
+     <footer class="footer">
+
+        <div class="footer-left">
+            <img src="{{ url_for('static', filename='image/my.png') }}" alt="">
+            <div class="socials">
+
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-youtube"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+            </div>
+        </div>
+        <ul class="footer-right">
+            <li>
+                <h2>Fresh_Mart</h2>
+
+                <ul class="box">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Carrers At Fresh_Mart</a></li>
+                    <li><a href="#">Terms and Conditions</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </li>
+
+            <li class="features">
+                <h2>Useful links</h2>
+
+                <ul class="box">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Sales</a></li>
+                    <li><a href="#">Tickets</a></li>
+                    <li><a href="#">Certifications</a></li>
+                </ul>
+            </li>
+
+
+            <li>
+                <h2>Address</h2>
+
+                <ul class="box">
+                    <li><a href="#">2nd Floor, Patil Plaza</a></li>
+                    <li><a href="#">Vanari Rd, Parvati Paytha</a></li>
+                    <li><a href="#">Pune,</a></li>
+                    <li><a href="#">Maharastra, India</a></li>
+                </ul>
+            </li>
+
+        </ul>
+
+        <div class="footer-bottom">
+            <p>All Right reserved by &copy;conceptial 2023 </p>
+
+        </div>
+
+    </footer>
+
+</body>
+</html>

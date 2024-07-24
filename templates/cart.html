@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('user_dashboard') }}" class="checkout-button">dashboard</a>
+    <a href="{{ url_for('orders') }}" class="previous-orders-button">Previous Orders</a>
+    
+    <h1 class="cart-title">Cart</h1>
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cart_item in cart_items %}
+                <tr class="cart-item">
+                    <td class="product-name">{{ cart_item.product.product_name }}</td>
+                    <td class="product-price">₹{{ cart_item.product.price_per_unit }}</td>
+                    <td class="product-quantity">{{ cart_item.quantity }}</td>
+                    <td class="product-total">₹{{ cart_item.total_price }}</td>
+
+                    <td class="product-action">
+                        <a href="{{ url_for('delete_from_cart', cart_item_id=cart_item.id) }}" class="delete-button" onclick="return confirm('Are you sure you want to delete {{ cart_item.product.product_name }} from your cart?')">Delete</a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            <tr class="cart-total-row">
+                <td colspan="3" class="total-label">Overall Total:</td>
+                <td class="overall-total">₹{{ overall_total }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{ url_for('checkout') }}" class="checkout-button">Checkout</a>
+</body>
+</html>

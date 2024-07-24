@@ -1,0 +1,169 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    font-family: monospace;
+    box-sizing: border-box;
+}
+.header{
+    background: #0f3358;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    padding: 0px 25px;
+    height: 80px;
+    align-items: center;
+    
+    
+}
+.logo img{
+    height: 80px;
+    
+}
+
+.search input{
+    height: 35px;
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding-left: 10px;
+    font-size: 15px;
+}
+
+.icons{
+    text-align: right;
+    
+}
+.icons .fa{
+    
+    color: rgb(230, 225, 225);
+    text-decoration: none;
+    font-size: 20px;
+    padding-left: 10px;
+    padding: 0px 10px;
+    transition: 0.6s;
+
+}
+.fa:hover{
+    color: black;
+}
+
+
+
+
+.container1{
+
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 20px;
+    padding: 20px;
+    
+
+}
+
+footer{
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-flow: row wrap;
+    padding: 20px;
+    color: #c26868;
+    background-color: #040442;
+    margin-top: 80px;
+
+}
+
+.footer > *{
+    flex: 1 100%;
+}
+.footer-left{
+    margin-right: 0.25cm;
+    margin-bottom: 0.5cm;
+}
+.footer-left img{
+
+    width: 10%;
+    margin-bottom: 0.5cm;
+}
+h2{
+    font-weight: 600;
+    font-size: 17px;
+}
+.footer ul{
+    list-style: none;
+    padding-left: 0;
+}
+.footer li{
+    line-height: 1cm;
+}
+.footer a{
+    text-decoration: none;
+}
+.footer-right{
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-flow: row wrap;
+}
+.footer-right >*{
+    flex: 1 50%;
+    margin-right: 1.25cm;
+}
+.box a{
+    color: #888484;
+
+}
+.footer-bottom{
+    text-align: center;
+    color: #888484;
+    padding-top: 40px;
+}
+.footer-left p{
+    padding-right: 10%;
+    color: #888484;
+}
+.socials a{
+    background: #424040;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-right: 10px;
+}
+.socials a{
+    color: #e7f2f4;
+    padding: 10px 12px;
+    font-size: 20px;
+}
+@media screen and (min-width: 600px){
+    .footer-right >*{
+        flex: 1;
+    }
+    .footer-left >*{
+        flex: 1 0px;
+    }
+    .footer-right >*{
+        flex: 2 0px;
+    }
+}
+@media (max-width: 600px){
+    .footer{
+        padding: 15px;
+    }
+    main{
+        font-size: 55px;
+    }
+}
+
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+
+

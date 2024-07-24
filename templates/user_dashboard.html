@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .user-icon {
+            font-size: 24px;
+            margin-right: 5px;
+            color: aliceblue;
+        }
+        .user-name {
+            font-size: 16px;
+            color: aliceblue;
+        }
+        .search-bar-container {
+            flex-grow: 1;
+            display: flex;
+            padding-top: 20px;
+            justify-content: center; 
+            align-items: center; 
+        }
+        .search-bar {
+            width: 100%; 
+            text-align: center; 
+        }
+        .logout-button {
+            margin-left: 10px; 
+        }
+        .order_list{
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+        .out_of_stock{
+            color: red;
+        }
+
+    </style>
+
+
+
+
+</head>
+<body>
+    <div class="header">
+
+        <form action="{{ url_for('user_dashboard') }}" method="POST"></form>
+    
+
+        <div class="user-info">
+            {% if current_user_name %}
+                <span class="user-icon"><i class="fas fa-user"></i></span>
+                <span class="user-name">Welcome, {{ current_user_name }}!</span>
+            {% else %}
+                <span class="user-icon"><i class="fas fa-user"></i></span>
+                <span class="user-name">Welcome, Guest!</span>
+            {% endif %}
+        </div>
+
+
+        <div class="search-bar-container">
+            <form method="get" action="user_dashboard">
+                <select id="category" name="category">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+
+        
+
+        <div class="logout-button">
+            {% if current_user_name %}
+                <form method="get" action="{{ url_for('user_logout') }}">
+                    <button type="submit"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </form>
+            {% endif %}
+        </div>
+
+
+    </div>
+
+
+    <div class="button-container">
+
+        <div class="control">
+            <form method="get" action="{{ url_for('orders') }}">
+                <button type="submit" class="previous-orders-button">Previous Order</button>
+            </form>    
+        </div>
+
+        <div class="control">
+            <form method="get" action="{{ url_for('user_summary') }}">
+                <button type="submit" class="previous-orders-button">Summary</button>
+            </form>    
+        </div>
+
+        <div class="control">
+            <form method="get" action="{{ url_for('cart') }}">
+                <button type="submit" class="view-cart-button1">View Cart</button>
+            </form>    
+        </div>
+
+    </div>
+
+
+    {% for category, products in products_by_category.items() %}
+        <h2>{{ category }} Products</h2>
+        <div class="product-cards">
+
+            {% for product in products %}
+                <div class="product-card">
+                    <h3>{{ product.product_name }}</h3>
+                    <p>Price: {{ product.price_per_unit }} </p>
+                    <p>Unit: {{ product.unit }} </p>
+                    {% if product.out_of_stock %}
+                    <p class="out-of-stock">Out of Stock</p>
+                    {% else %}
+                    <form method="post" action="{{ url_for('add_to_cart', product_id=product.product_id) }}">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1">
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+
+
+    <form method="get" action="{{ url_for('cart') }}">
+        <button type="submit" class="view-cart-button">View Cart</button>
+    </form>
+
+</body>
+</html>
