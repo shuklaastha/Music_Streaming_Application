@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Playlist</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .top-buttons {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .edit-playlist-form {
+            max-width: 600px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        input[type="text"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .top-buttons a {
+            padding: 10px;
+            text-decoration: none;
+            color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-buttons">
+        <a href="{{url_for('user_dashboard')}}" class="home-btn">Home</a>
+        <a href="{{url_for('logout')}}" class="logout-btn">Logout</a>
+    </div>
+
+    <div class="edit-playlist-form">
+        <h1>Edit Playlist Name</h1>
+        <form action="{{url_for('editt_playlist', user_id=user_id, playlist_id=playlist_id)}}" method="post">
+            <label for="editedPlaylistName">New Playlist Name:</label>
+            <input type="text" id="editedPlaylistName" name="name" required value="{{ playlists.name }}">
+
+            <input type="submit" value="Update Playlist Name">
+        </form>
+    </div>
+</body>
+</html>

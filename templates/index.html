@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Homepage</title>
+</head>
+<style>
+        .bgimg {
+            opacity:100%;
+            position:absolute;
+            top:0;
+            left: 0;
+            width: 100%;
+            z-index: -1;
+        }
+        div
+        {
+            position: relative;
+            opacity: 100%;
+        }
+         body
+         {text-align: center;
+         }
+         .flash-messages div {
+            color: white; /* Set the text color for flash message text */
+        }
+
+</style>
+<body>
+    
+    <div class="div-a">
+        <div class="div-b " >
+            <h1 style="color: white;">Sangeet</h1>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+        <div class="div-c">
+            <br><br><br><br>
+            <button onclick="window.location.href='user_login';"
+                    button type="button">User Login</button>
+            <button onclick="window.location.href='admin_login';"
+                    button type="button">Admin Login</button>
+            <button onclick="window.location.href='register';"
+                    button type="button">New User</button>
+            </div>
+    </div>
+    <img class="bgimg" src="https://cdn.dribbble.com/users/146798/screenshots/1851691/media/96965682aaa5a06421420b22abf6ef7f.png?resize=400x0" alt="music icon image">
+</body>
+</html>
+
+
+

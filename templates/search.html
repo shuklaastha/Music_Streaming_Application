@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <style>
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4; /* Light gray background */
+}
+
+.container {
+    max-width: 800px; /* Set maximum width for better readability */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+h2 {
+    color: #333;
+}
+
+.logout-btn,
+.home-btn {
+    padding: 10px 16px;
+    margin-left: 10px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.album-container {
+    margin-top: 20px; /* Add space between buttons and content */
+}
+
+.album {
+    background-color: #fff; /* White background */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.album a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    display: block; /* Make the link a block element for better spacing */
+    margin-bottom: 8px; /* Add space between links */
+}
+
+.album a:hover {
+    text-decoration: underline;
+}
+
+.album:hover {
+    background-color: #f8f9fa; /* Lighter background color on hover */
+}
+
+
+   </style> 
+</head>
+<body>
+    <a href="{{url_for('logout')}}" class="logout-btn">Logout</a>
+    <a href="{{url_for('user_dashboard')}}" class="home-btn">Home</a>
+    <h3>Search Results</h3>
+
+    <h2>ALBUMS</h2>
+    {% for a in resultss %}
+    {% if a.flag==False %}
+        <div class="album">
+            <a href="/album_song/{{a.id}}">{{ a.name }}</a><br>
+        </div>
+    {%endif%}
+    {% endfor %}
+
+    <h2>SONGS</h2>
+    {% for s in results %}
+    {% if s.flag==False %}
+        <div class="album">
+            <a href="/play_song/{{s.id}}">{{ s.name }}</a><br>
+            Rating: {{ s.rating }}<br>
+        </div>
+    {%endif%}
+    {% endfor %}   
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Playlist</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 0vh;
+            background-color: #f4f4f4;
+        }
+
+        .top-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background-color: #007bff;
+            padding: 10px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .logout-btn,
+        .home-btn,
+        .creator-btn,
+        .delete-btn {
+            padding: 10px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .logout-btn,
+        .home-btn,
+        .creator-btn {
+            background-color: #007bff;
+        }
+
+        .delete-btn {
+            background-color: #9ceb9c;
+        }
+
+        .song-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .song-container a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .song-container a:hover {
+            text-decoration: underline;
+        }
+
+        .song-container:hover {
+            background-color: #f8f9fa;
+        }
+
+        .flash-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .alert-success,
+        .alert-danger {
+            font-size: 18px;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .alert-success {
+            background-color: #28a745;
+            border-color: #218838;
+            color: #fff;
+        }
+
+        .alert-danger {
+            background-color: #dc3545;
+            border-color: #c82333;
+            color: #fff;
+        }
+
+        /* Added styles for the form and buttons */
+        form {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 600px;
+            display: flex;
+            justify-content: space-between; /* Move the form items to space between */
+            align-items: center;
+        }
+
+        label, select {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        select {
+            flex: 1; /* Allow the select box to grow and take available space */
+            margin-right: 10px; /* Add some space between select and button */
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            padding: 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Adjusted delete button styles */
+        .delete-btn {
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-buttons">
+        <div class="button-container">
+            <a href="{{url_for('logout')}}" class="logout-btn">Logout</a>
+            <a href="{{url_for('user_dashboard')}}" class="home-btn">Home</a>
+            <a href="{{url_for('display_playlist', user_id=user.id)}}" class="creator-btn">Your Playlists</a>
+        </div>
+    </div>
+
+    <h1>Edit Your Playlist</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+                <div class="alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <h2>Add song to {{p.name}}</h2>
+    <form action="/edit_playlist/{{user.id}}/{{p.id}}" method="post">
+        <label for="song">Select song</label>
+        <select name="song_id" id="song">
+            {% for s in song %}
+                {% if s.flag == False %}
+                    <option value="{{s.id}}">{{s.name}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <input type="submit" value="Add">
+    </form>
+
+    {% for s in p.songs %}
+        <div class="song-container">
+            <a href="{{url_for('play_song', id=s.id)}}">{{s.name}}</a>
+            <a href="{{url_for('delete_playlist_song', user_id=user.id, playlist_id=p.id, song_id=s.id)}}" class="delete-btn" onclick="return confirm('Are you sure you want to remove this song from the playlist?')">Remove</a>
+        </div>
+    {% endfor %}
+</body>
+</html>
+
+

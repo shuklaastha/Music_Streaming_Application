@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .top-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .button-container {
+            display: flex;
+        }
+
+        .button-container a {
+            padding: 10px;
+            text-decoration: none;
+            color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .creator-content {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        .creator-content h3,
+        .creator-content h4 {
+            font-size: 18px; /* Larger font for albums and songs */
+        }
+
+        .edit-btn,
+        .delete-btn {
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #28a745; /* Green color for edit button */
+        }
+
+        .delete-btn {
+            background-color: #dc3545; /* Red color for delete button */
+        }
+
+        .flagged-message {
+            color: #dc3545; /* Red color for flagged message */
+        }
+
+        /* Flash Messages CSS */
+        .flash-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .alert-success {
+            background-color: #d4edda; /* Light green background for success message */
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da; /* Light red background for danger message */
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .blue-text {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-buttons">
+        <h1>Creator Dashboard</h1>
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <div class="button-container">
+            <a href="{{url_for('user_dashboard')}}">Home</a>
+            <a href="{{url_for('logout')}}">Logout</a>
+            <a href="{{url_for('upload_songs',id=user.id)}}">Create Song</a>
+            <a href="/create_album/{{user.id}}">Create Album</a>
+        </div>
+    </div>
+
+    <div class="creator-content">
+        <p>Welcome, {{user.name}}! This is your creator dashboard.</p>
+        {% if user.blacklist==True %}
+        <h4><p class="flagged-message">You have been blacklisted, please revise your content.</p></h4>
+        {% endif %}
+    </div>
+
+    <div class="creator-content">
+        <h3>Albums</h3>
+        {% if albums|length == 0 %}
+        <h3 class="blue-text">You have not uploaded any album. Your Uploaded albums will appear here.</h3>
+        {% else %}
+        {% for a in album %}
+            {% if a.user_id==user.id %}
+                <h4><div>
+                    <a href="/display_creator/{{a.id}}">{{a.name}}</a>
+                    {% if a.flag %}
+                    <p class="flagged-message">This album has been flagged.</p>
+                    {% endif %}
+                    <a href="/edit_album/{{a.id}}" class="edit-btn">Edit</a>
+                    <a href="/delete_album/{{a.id}}" class="delete-btn" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                </div></h4>
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        <h3>Songs</h3>
+        {% if songs|length == 0 %}
+        <h3 class="blue-text">You have not uploaded any song. Your uploaded songs will appear here.</h3>
+        {% else %}
+        {% for s in song %}
+            {% if s.user_id==user.id %}
+                <h4><div>
+                    <a href="/play_song/{{s.id}}">{{s.name}}</a>
+                    {% if s.flag %}
+                    <p class="flagged-message">This Song has been flagged.</p>
+                    {% endif %}
+                    <a href="/edit_song/{{user.id}}/{{s.id}}" class="edit-btn">Edit</a>
+                    <a href="/delete_song/{{s.id}}" class="delete-btn" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                </div></h4>
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

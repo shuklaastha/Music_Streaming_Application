@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .logout-btn,
+        .home-btn,
+        .creator-btn {
+            padding: 5px 10px;
+            margin-left: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .album {
+            margin-bottom: 20px;
+        }
+
+        .song {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        .rating-dropdown {
+            width: 100px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        
+        <h1>{{a.name}}</h1>
+
+
+        <a href="{{url_for('logout')}}" class="logout-btn">Logout</a>
+        <a href="{{url_for('user_dashboard')}}" class="home-btn">Home</a>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div>
+            {% for category, message in messages %}
+                <div>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+    <h1> Songs</h1>
+    {% if songs|length == 0 %}
+    <h3>No songs available in this album.</h3>
+    {% else %}
+    <ul>
+        {% for s in songs %}
+            {% if s.flag==False %}
+            <li>
+                <a href="/play_song/{{s.id}}">{{ s.name }}</a> 
+                Genre: {{ s.genre }}<br>
+                Artist: {{ s.creator_name }}<br>
+                Creation Date: {{ s.creation_date }}<br>
+                rate here:
+            <form action="/rate_song/{{ s.id }}" method="post">
+                <select name="rating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <button type="submit">Rate</button>
+        </form>
+    </li>
+    {% endif %}
+    {% endfor %}
+    {%endif%}
+    </ul>
+
+
+    
+</body>
+</html>
+
+

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Songs</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .logout-btn,
+        .home-btn,
+        .creator-btn {
+            padding: 5px 10px;
+            margin-left: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <a href="{{url_for('logout')}}" class="logout-btn">Logout</a>
+    <a href="{{url_for('creator_dashboard')}}" class="home-btn">Home</a>
+    
+    <h1>Upload Song</h1>
+
+    <form action="/upload_songs/{{user.id}}" method="post">
+        <label for="songName">Song Name:</label>
+        <input type="text" id="songName" name="name" required>
+
+        <label for="creationDate">Creation Date:</label>
+        <input type="date" id="creationDate" name="creation_date" required>
+
+        <label for="lyrics">Lyrics:</label>
+        <textarea id="lyrics" name="lyrics" rows="20" required></textarea>
+
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" required>
+
+        <label for="creatorName">Artist:</label>
+        <input type="text" id="creatorName" name="creator_name" required>
+
+        <label for = "album">Select Album</label>
+        <select name = "album" id ="album">
+
+            {%for s in album%}
+                {% if user.id==s.user_id and s.flag==False %}
+            <option value="{{s.id}}">{{s.name}}</option>
+                {% endif %}
+            {%endfor%}
+
+
+        </select>
+
+        <input type="submit" value="Upload Song">
+    </form>
+</body>
+</html>

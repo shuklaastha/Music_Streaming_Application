@@ -1,0 +1,36 @@
+/* 
+.div-a
+{
+    height: 665px;
+    border-style: solid;
+    border-color: rgb(2, 123, 2);
+    margin: 20px;
+    border-width: 10px;
+    text-align: center;
+}
+
+.div-b
+{
+    background-color: lightgray;
+    width: 640px;
+    position: relative;
+    left: 28%;
+    top: 20%;
+    border-style: solid;
+    border-color: rgb(2, 123, 2);
+    border-width: 5px;
+}
+
+.div-c
+{
+    background-color: lightgray;
+    line-height: 2;
+    width: 600PX;
+    position: relative;
+    left: 28%;
+    top: 25%;
+    padding: 20px;
+    border-style: solid;
+    border-color: rgb(2, 123, 2);
+    border-width: 5px;
+} */

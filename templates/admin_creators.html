@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Users</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .user-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            align-items: center;
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .user-email {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .blacklist-dropdown {
+            margin-right: 10px;
+        }
+
+        .update-button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .success-message {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .danger-message {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #dc3545;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .logout-btn,
+        .home-btn,
+        .creator-btn {
+            padding: 10px 15px;
+            margin-left: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #0056b3;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover,
+        .home-btn:hover,
+        .creator-btn:hover {
+            background-color: #004080;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-buttons">
+        <a href="/admin_dashboard" class="creator-btn">Home</a>
+        <a href="/logout" class="creator-btn">Logout</a>
+    </div>
+    <h1>All Users</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div>
+            {% for category, message in messages %}
+                <div class="{{ category }}-message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <ul class="user-list">
+        {% for user in users %}
+            <li class="user-item">
+                <div>
+                    <p class="user-name">{{ user.name }}</p>
+                    <p class="user-email">{{ user.email }}</p>
+                    <p>{{ "Blacklisted" if user.blacklist else "Whitelisted" }}</p>
+                </div>
+                <div>
+                    <form method="POST" action="{{ url_for('blacklist_creator', user_id=user.id) }}">
+                        <select class="blacklist-dropdown" name="blacklist_action">
+                            <option value="0">Whitelist</option>
+                            <option value="1">Blacklist</option>
+                        </select>
+                        <button type="submit" class="update-button">Update</button>
+                    </form>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

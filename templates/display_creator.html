@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logout-btn,
+        .home-btn {
+            padding: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .album {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .song {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .song-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-btn,
+        .delete-btn {
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #28a745; /* Green color for edit button */
+        }
+
+        .delete-btn {
+            background-color: #dc3545; /* Red color for delete button */
+        }
+
+        .flagged-message {
+            color: #dc3545; /* Red color for flagged message */
+        }
+
+        .flash-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .alert-success {
+            background-color: #d4edda; /* Light green background for success message */
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da; /* Light red background for danger message */
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+                <div class="alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="header">
+        <h1>{{album.name}}</h1>
+        <div>
+            <a href="{{url_for('creator_dashboard')}}" class="home-btn">Home</a>
+            <a href="{{url_for('logout')}}" class="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <h1>Songs</h1>
+    {% if songs|length == 0 %}
+        <h3>You have not uploaded any song. Your Uploaded songs will appear here.</h3>
+    {% else %}
+        <ul>
+            {% for s in song %}
+                {% if a.id==s.album_id and s.flag==False %}
+                    <li class="song">
+                        <div>
+                            <a href="/play_song/{{s.id}}">{{ s.name }}</a><br>
+                            Genre: {{ s.genre }}<br>
+                            Creator: {{ s.creator_name }}<br>
+                            Creation Date: {{ s.creation_date }}<br>
+                            {% if s.flag %}
+                                <p class="flagged-message">This song has been flagged.</p>
+                            {% endif %}
+                        </div>
+                        <div class="song-actions">
+                            <a href="{{url_for('edit_song', id=s.id, userr=user.id)}}" class="edit-btn">Edit Song</a>
+                            <a href="{{url_for('delete_song', song_id=s.id)}}" class="delete-btn" onclick="return confirm('Are you sure you want to delete?')">Delete Song</a>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            color: #007bff;
+            margin: 0;
+        }
+
+        .top-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .button-container a {
+            margin-right: 10px;
+        }
+
+        .creator-content {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .creator-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="top-buttons bg-light">
+            <h1>Admin Dashboard</h1>
+            <!-- Flash messages or notifications -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <div class="button-container">
+                <a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a>
+                <a href="/admin_creators" class="btn btn-primary">View Users</a>
+                <a href="/admin_songs" class="btn btn-primary">View Songs</a>
+                <a href="/admin_albums" class="btn btn-primary">View Albums</a>
+            </div>
+        </div>
+
+        <div class="creator-content">
+            <p>Welcome, Admin! This is your dashboard.</p>
+
+            <ul>
+                <li>Total Users: {{ total_users_count }}</li>
+                <li>Total Creators: {{ total_creators_count }}</li>
+                <li>Total Songs: {{ total_songs_count }}</li>
+                <li>Total Albums: {{ total_albums_count }}</li>
+                <li>Blacklisted Creators: {{ blacklisted_creators_count }}</li>
+                <li>Flagged Songs: {{ flagged_songs_count }}</li>
+            </ul>
+
+            <img src="..\static\BarGraph.jpeg" alt="Bar Graph Image" class="img-fluid">
+            <img src="..\static\PieChart.jpeg" alt="Pie Chart Image" class="img-fluid">
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

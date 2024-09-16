@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #007bff;
+            padding: 10px;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .search-bar {
+            width: 300px;
+            padding: 5px;
+        }
+
+        .logout-btn,
+        .home-btn,
+        .creator-btn {
+            padding: 10px 15px;
+            margin-left: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #0056b3;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover,
+        .home-btn:hover,
+        .creator-btn:hover {
+            background-color: #004080;
+        }
+        .flash-messages {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2001; 
+            }
+
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        background-color: #007bff;
+        padding: 10px;
+        border-radius: 5px;
+        color: #fff;
+        position: relative;
+        z-index: 1000; 
+        margin-top: 60px; 
+    }
+
+
+
+        .flash-messages div {
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            color: #333;
+        }
+
+        .flash-messages .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        .flash-messages .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        
+
+        .content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+                .album {
+            background-color: #f8f9fa; 
+            border: 1px solid #dee2e6;
+            border-radius: 5px; 
+            padding: 15px; 
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease; 
+        }
+
+        .album:hover {
+            background-color: #e2e6ea; 
+        }
+
+        .album a {
+            color: #007bff; 
+            text-decoration: none; 
+            font-weight: bold; 
+        }
+
+        .album a:hover {
+            text-decoration: underline; 
+        }
+
+
+        .song {
+            margin-left: 20px;
+            margin-bottom: 10px;
+            list-style: none;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+
+        .song a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .song a:hover {
+            text-decoration: underline;
+        }
+
+        .rate-form {
+            display: flex;
+            align-items: center;
+        }
+
+        .rate-form select,
+        .rate-form button {
+            margin-left: 10px;
+        }
+
+        .rate-form button {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .rate-form button:hover {
+            background-color: #004080;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>User Dashboard</h1>
+        <form action="{{ url_for('search') }}" method="POST">
+            <input class="form-control mr-sm-2 search-bar" type="text" name="query" placeholder="Search...">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <a href="{{url_for('logout')}}" class="logout-btn">Logout</a>
+        <a href="{{url_for('user_dashboard')}}" class="home-btn">Home</a>
+        {% if user.creator!="yes" %}
+        <a href="{{url_for('register_creator')}}" class="creator-btn" onclick="return confirm('Are you sure you want to register as a creator?')">Creator</a>
+        {% else %}
+        <a href="{{url_for('creator_dashboard')}}" class="home-btn">Creator Dashboard</a>
+        {% endif %}
+        <a href="{{url_for('display_playlist', user_id=user.id)}}" class="creator-btn">Your Playlists</a>
+    </div>
+
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="content">
+        <h2>ALBUMS</h2>
+        {% if album|length == 0 %}
+            <h3>No Album available</h3>
+        {% else %}
+            {% for a in album %}
+                {% if a.flag==False %}
+                    <div class="album">
+                        <a href="/album_song/{{a.id}}">{{ a.name }}</a><br>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <h2>SONGS</h2>
+        {% if song|length == 0 %}
+            <h3>No Songs available</h3>
+        {% else %}
+            {% for s in song %}
+                {% if s.flag==False %}
+                    <li class="song">
+                        <a href="/play_song/{{s.id}}">{{ s.name }}</a><br>
+                        Genre: {{ s.genre }}<br>
+                        Artist: {{ s.creator_name }}<br>
+                        Creation Date: {{ s.creation_date }}<br>
+                        Rating: {{ s.rating }}<br>
+                        Rate here:
+                        <form action="/rate_song/{{ s.id }}" method="post" class="rate-form">
+                            <select name="rating">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <button type="submit">Rate</button>
+                        </form>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

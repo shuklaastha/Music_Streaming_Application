@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Album</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        select[multiple] {
+            height: 150px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .logout-btn,
+        .home-btn,
+        .creator-btn {
+            padding: 5px 10px;
+            margin-left: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout-btn,
+        .home-btn,
+        .creator-btn {
+            padding: 5px 10px;
+            margin-left: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <a href="{{url_for('logout')}}" class="logout-btn">Logout</a>
+    <a href="{{url_for('creator_dashboard')}}" class="home-btn">Home</a>
+    <h1>Edit Album</h1>
+
+    <form action="/edit_album/{{c.id}}" method="post">
+        <input type="hidden" name="albumId" value="1">
+
+        <label for="albumName">Album Name:</label>
+        <input type="text" id="albumName" name="name" value="{{c.name}}" required>
+
+        <input type="submit" value="Save Changes">
+    </form>
+
+</body>
+</html>
